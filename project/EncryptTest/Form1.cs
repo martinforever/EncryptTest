@@ -14,7 +14,8 @@ namespace EncryptTest
 {
     public partial class Form1 : Form
     {
-        private String filePath = "c:\\";
+        byte[] key = Encoding.Default.GetBytes("12345678");
+        byte[] iv = Encoding.Default.GetBytes("87654321");
 
         public Form1()
         {
@@ -35,14 +36,11 @@ namespace EncryptTest
             Decrypt_DES();
         }
 
-        byte[] key;
-        byte[] iv;
-
         private void Encrypt_DES()
         {
             DESCryptoServiceProvider DesCSP = new DESCryptoServiceProvider();
-            key = DesCSP.Key;
-            iv = DesCSP.IV;
+            DesCSP.Key = key;
+            DesCSP.IV = iv;
 
             MemoryStream ms = new MemoryStream();//先创建一个内存流
             CryptoStream cryStream = new CryptoStream(ms, DesCSP.CreateEncryptor(), CryptoStreamMode.Write);//将内存流连接到加密转换流
